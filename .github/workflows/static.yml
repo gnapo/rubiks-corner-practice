@@ -38,10 +38,10 @@ jobs:
           node-version: '20'
       - name: install dependencies
         run: npm ci
-        working-directory: ./rubiks-corner-practice/app
+        working-directory: ./app
       - name: build
         run: npm run build
-        working-directory: ./rubiks-corner-practice/app
+        working-directory: ./app
         
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist repository
-          path: './rubiks-corner-practice/app/dist'
+          path: './app/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
