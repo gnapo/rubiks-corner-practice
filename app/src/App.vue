@@ -94,20 +94,27 @@ function getRandomArrowDirection() {
   const val = Math.floor(Math.random() * 3)
   return (['TR', 'TL', 'B'] as Arrow[])[val]
 }
+
+function restartAnimation(className: string) {
+  const element = document.querySelector('.display-text') as HTMLElement;
+  if (element) {
+    element.classList.remove(className);
+    void element.offsetWidth; // Trigger reflow
+    element.classList.add(className);
+  }
+}
 function guess(color: CubeColor) {
   const hiddenColors = getHiddenColors(cubeState)
   if (hiddenColors[arrowDirection.value] === color) {
     displayText.value = "Correct!"
     correctGuess.value = true
-    setTimeout(() => {
-      correctGuess.value = false
-    }, 2000)
+    incorrectGuess.value = false
+    restartAnimation('correct')
   } else {
     displayText.value = "Incorrect! It was " + cubeColorNames[hiddenColors[arrowDirection.value]]
     incorrectGuess.value = true
-    setTimeout(() => {
-      incorrectGuess.value = false
-    }, 2000)
+    correctGuess.value = false
+    restartAnimation('incorrect')
   }
   arrowDirection.value = getRandomArrowDirection()
   setVisibility(arrowDirection.value)
