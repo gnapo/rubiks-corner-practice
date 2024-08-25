@@ -86,6 +86,8 @@ const loop = () => {
 
 // game logic
 const displayText = ref("determine the color of the indicated hidden face")
+const correctGuess = ref(false)
+const incorrectGuess = ref(false)
 const arrowDirection = ref<Arrow>(getRandomArrowDirection())
 setVisibility(arrowDirection.value)
 function getRandomArrowDirection() {
@@ -96,8 +98,16 @@ function guess(color: CubeColor) {
   const hiddenColors = getHiddenColors(cubeState)
   if (hiddenColors[arrowDirection.value] === color) {
     displayText.value = "Correct!"
+    correctGuess.value = true
+    setTimeout(() => {
+      correctGuess.value = false
+    }, 2000)
   } else {
     displayText.value = "Incorrect! It was " + cubeColorNames[hiddenColors[arrowDirection.value]]
+    incorrectGuess.value = true
+    setTimeout(() => {
+      incorrectGuess.value = false
+    }, 2000)
   }
   arrowDirection.value = getRandomArrowDirection()
   setVisibility(arrowDirection.value)
@@ -122,7 +132,7 @@ function handleKeyDown(event: KeyboardEvent) {
     <button class="orange-button" @click="guess('o')">[O]range</button>
     <button class="yellow-button" @click="guess('y')">[Y]ellow</button>
   </div>
-  <div class="display-text">
+  <div class="display-text" :class="{correct: correctGuess, incorrect: incorrectGuess}">
     {{displayText}}
   </div>
 </template>
@@ -149,11 +159,18 @@ function handleKeyDown(event: KeyboardEvent) {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    &:hover {
+      border: 2px solid whitesmoke;
+    }
   }
 
   .white-button {
     background-color: white;
     color: black;
+    &:hover {
+      border: 2px solid darkgray;
+    }
   }
   .green-button {
     background-color: green;
@@ -177,12 +194,36 @@ function handleKeyDown(event: KeyboardEvent) {
   }
 }
 
+@keyframes flashGreenToWhite {
+  0% {
+    color: lightgreen;
+  }
+  100% {
+    color: white;
+  }
+}
+
+@keyframes flashRedToWhite {
+  0% {
+    color: red;
+  }
+  100% {
+    color: white;
+  }
+}
+
 .display-text {
   height: 12vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: white;
+  &.correct {
+    animation: flashGreenToWhite 2s;
+  }
+  &.incorrect {
+    animation: flashRedToWhite 2s;
+  }
 }
 </style>
