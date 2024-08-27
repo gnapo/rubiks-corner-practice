@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {AmbientLight, Color, DirectionalLight, PerspectiveCamera, Scene, WebGLRenderer} from 'three'
+import {AmbientLight, Color, PerspectiveCamera, Scene, WebGLRenderer} from 'three'
 import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 import {useWindowSize} from "@vueuse/core";
 import {getCube} from "@/cube/cubeObjects";
@@ -42,12 +42,8 @@ function setRotation(time: number) {
 
 
 //lighting
-const ambientLight = new AmbientLight(0xffffff, 1.5); // White light with intensity of 0.5
-
+const ambientLight = new AmbientLight(0xffffff, 3.5); // White light with intensity of 0.5
 scene.add(ambientLight);
-const directionalLight = new DirectionalLight(0xffffff, 3); // White light with intensity of 1
-directionalLight.position.set(1, 1, 1); // Position the light source
-scene.add(directionalLight);
 scene.background = new Color(0x222341)
 
 let renderer: WebGLRenderer
@@ -192,7 +188,7 @@ function handleKeyDown(event: KeyboardEvent) {
     color: white;
   }
   .orange-button {
-    background-color: orange;
+    background-color: #ff7300;
     color: white;
   }
   .yellow-button {
