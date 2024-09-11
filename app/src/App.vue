@@ -128,7 +128,7 @@ function handleKeyDown(event: KeyboardEvent) {
 <template>
   <canvas ref="canvas" class="cube-image"/>
   <div class="button-row">
-    <button class="white-button" @click="guess('w')">[W]ite</button>
+    <button class="white-button" @click="guess('w')">[W]hite</button>
     <button class="green-button" @click="guess('g')">[G]reen</button>
     <button class="red-button" @click="guess('r')">[R]ed</button>
     <button class="blue-button" @click="guess('b')">[B]lue</button>
